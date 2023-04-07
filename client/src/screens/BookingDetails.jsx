@@ -28,21 +28,39 @@ export function AllBookings() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState()
 
+    const sortRooms = (data) => {
+        return data.sort(function (a, b) {
+            if (a.fromdate < b.fromdate) {
+                return -1;
+            }
+            if (a.fromdate > b.fromdate) {
+                return 1;
+            }
+            if(a.todate < b.todate){
+                return -1;
+            }
+            if(a.todate > b.todate){
+                return 1;
+            }
+            return 0;
+        })
+    }
+
     useEffect(() => {
         async function fetchData() {
 
             try {
                 setLoading(true)
-                const data = await (await axios.post('/api/bookings/getbookingsby')).data
+                const {data} = (await axios.post('/api/bookings/getbookingsby'))
+                const newData = sortRooms(data)
                 console.log(data)
-                setBookings(data)
+                setBookings(newData)
                 setLoading(false)
 
             } catch (error) {
                 console.log(error)
                 setLoading(false)
                 setError(error)
-
             }
         }
         fetchData()

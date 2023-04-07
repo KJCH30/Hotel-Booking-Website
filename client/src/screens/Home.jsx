@@ -120,7 +120,7 @@ function Home() {
             <option value="Premium">Premium</option>
             <option value="Regular">Regular</option>
           </select>
-        </div>
+        </div> 
 
 
       </div>
